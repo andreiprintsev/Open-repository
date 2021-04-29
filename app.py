@@ -62,5 +62,6 @@ def users():
         userDetails = cur.fetchall()
         return render_template('users.html',userDetails=userDetails)
 
-if __name__ == '__main__':
-    app.run(database_migration())
+app.run(database_migration())
+
+
