@@ -12,15 +12,11 @@ import os
 app = Flask(__name__)
 
 #Conditionally configure database
-print(os.environ.get("RUNNING_ON_HEROKU"))
-print(type(os.environ.get("RUNNING_ON_HEROKU")))
 db = ""
 if os.environ.get("RUNNING_ON_HEROKU") != None:
     db = yaml.load(open('cleardb.yaml'))
-    print(db)
 else:
     db = yaml.load(open('db.yaml'))
-    print(db)
     
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
@@ -32,21 +28,20 @@ mysql = MySQL(app)
 def database_migration():
     print("I ran once")
     if os.environ.get("RUNNING_ON_HEROKU") != None:
-        cur = mysql.connection.cursor()
-        cur.execute("DELETE * FROM users")
-        with open("database.txt") as file:
-            for line in file:
-                split = line.split("-")
-                cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
-        mysql.connection.commit()
-        cur.close()
+        with app.app_context():
+            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM users")
+            with open("database.txt") as file:
+                for line in file:
+                    split = line.split("-")
+                    cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
+            cur.close()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
-        print(userDetails)
         name = userDetails['name']
         email = userDetails['email']
         cur = mysql.connection.cursor()
