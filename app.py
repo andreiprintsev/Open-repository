@@ -14,7 +14,7 @@ app = Flask(__name__)
 #Conditionally configure database
 print(os.environ.get("RUNNING_ON_HEROKU"))
 db = ""
-if os.environ.get("RUNNING_ON_HEROKU") == True:
+if os.environ.get("RUNNING_ON_HEROKU") == "True":
     db = yaml.load(open('cleardb.yaml'))
     print(db)
 elif:
