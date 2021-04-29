@@ -25,15 +25,19 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
-if os.environ.get("RUNNING_ON_HEROKU") != None:
+if os.environ.get("RUNNING_ON_HEROKU") == None:
     with app.app_context():
         cur = mysql.connection.cursor()
         cur.execute("DELETE FROM users")
         mysql.connection.commit()
         with open("database.txt") as file:
             for line in file:
+                print(line)
                 split = line.split("-")
-                cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
+                name = split[0]
+                email = split[1]
+                print(name, email)
+                cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(name, email))
                 mysql.connection.commit()
         cur.close()
 
