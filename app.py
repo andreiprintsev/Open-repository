@@ -17,7 +17,7 @@ db = ""
 if os.environ.get("RUNNING_ON_HEROKU") == "True":
     db = yaml.load(open('cleardb.yaml'))
     print(db)
-elif:
+else:
     db = yaml.load(open('db.yaml'))
     print(db)
     
