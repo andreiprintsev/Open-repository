@@ -1,1 +1,1 @@
-web: gunicorn app:app.run(database_migration())
+web: gunicorn app:app.run()
