@@ -30,6 +30,7 @@ app.config['MYSQL_DB'] = db['mysql_db']
 mysql = MySQL(app)
 
 def database_migration():
+    print("I ran once")
     if os.environ.get("RUNNING_ON_HEROKU") != None:
         cur = mysql.connection.cursor()
         cur.execute("DELETE * FROM users")
@@ -64,4 +65,4 @@ def users():
         return render_template('users.html',userDetails=userDetails)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(database_migration())
