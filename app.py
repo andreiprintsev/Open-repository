@@ -25,6 +25,7 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
+#Database migration at every relaunch instance of app
 if os.environ.get("RUNNING_ON_HEROKU") != None:
     with app.app_context():
         cur = mysql.connection.cursor()
@@ -32,7 +33,6 @@ if os.environ.get("RUNNING_ON_HEROKU") != None:
         mysql.connection.commit()
         with open("database.txt") as file:
             for line in file:
-                print(line)
                 split = line.split("-")
                 name = split[0]
                 email = split[-1]
