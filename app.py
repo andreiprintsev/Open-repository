@@ -7,11 +7,16 @@
 from flask import Flask, render_template, request, redirect
 from flask_mysqldb import MySQL
 import yaml
+import os
 
 app = Flask(__name__)
 
-# Configure db
-db = yaml.load(open('db.yaml'))
+#Conditionally configure database
+if os.environ.get("RUNNING_ON_HEROKU") != True:
+    db = yaml.load(open('db.yaml'))
+else:
+    db = yaml.load(open('cleardb.yaml'))
+
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
@@ -45,4 +50,4 @@ def users():
         return render_template('users.html',userDetails=userDetails)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

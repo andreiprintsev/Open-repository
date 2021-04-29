@@ -1,0 +1,5 @@
+mysql_host: 'eu-cdbr-west-01.cleardb.com'
+mysql_user: 'bca07be0627548'
+# Enter your password in field below
+mysql_password: 'f0eaaabb'
+mysql_db: 'heroku_dd294c2ac18fff8'
