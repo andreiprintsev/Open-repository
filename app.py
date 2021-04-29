@@ -32,7 +32,7 @@ mysql = MySQL(app)
 if os.environ.get("RUNNING_ON_HEROKU") != None:
     cur = mysql.connection.cursor()
     cur.execute("DELETE * FROM users")
-    with open("database.txt) as file:
+    with open("database.txt") as file:
         for line in file:
             split = line.split("-")
             cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
