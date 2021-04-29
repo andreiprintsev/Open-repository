@@ -13,11 +13,11 @@ app = Flask(__name__)
 
 #Conditionally configure database
 print(os.environ.get("RUNNING_ON_HEROKU"))
-if os.environ.get("RUNNING_ON_HEROKU") != True:
-    db = yaml.load(open('db.yaml'))
-else:
+if os.environ.get("RUNNING_ON_HEROKU") == True:
     db = yaml.load(open('cleardb.yaml'))
-
+else:
+    db = yaml.load(open('db.yaml'))
+    
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
