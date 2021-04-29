@@ -27,6 +27,7 @@ mysql = MySQL(app)
 
 def database_migration():
     print("I ran once")
+    print(os.environ.get("RUNNING_ON_HEROKU"))
     if os.environ.get("RUNNING_ON_HEROKU") != None:
         with app.app_context():
             cur = mysql.connection.cursor()
