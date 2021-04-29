@@ -35,7 +35,7 @@ if os.environ.get("RUNNING_ON_HEROKU") == None:
                 print(line)
                 split = line.split("-")
                 name = split[0]
-                email = split[1]
+                email = split[-1]
                 print(name, email)
                 cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(name, email))
                 mysql.connection.commit()
