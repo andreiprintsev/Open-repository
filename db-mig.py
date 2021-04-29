@@ -20,6 +20,7 @@ cur.execute("SELECT * FROM users")
 with open("database.txt", "w", newline='') as file:
     for (name, email) in cur:
         file.write(f"{name}-{email}\n")
+cur.close()
 
 os.system("git add -A")
 os.system("git commit -m 'pushing to heroku'") 
