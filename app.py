@@ -31,10 +31,12 @@ def database_migration():
         with app.app_context():
             cur = mysql.connection.cursor()
             cur.execute("DELETE FROM users")
+            mysql.connection.commit()
             with open("database.txt") as file:
                 for line in file:
                     split = line.split("-")
                     cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
+                    mysql.connection.commit()
             cur.close()
 
 @app.route('/', methods=['GET', 'POST'])
