@@ -29,14 +29,16 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
-if os.environ.get("RUNNING_ON_HEROKU") != None:
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE * FROM users")
-    with open("database.txt") as file:
-        for line in file:
-            split = line.split("-")
-            cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
-    cur.close()
+def database_migration():
+    if os.environ.get("RUNNING_ON_HEROKU") != None:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE * FROM users")
+        with open("database.txt") as file:
+            for line in file:
+                split = line.split("-")
+                cur.execute("INSERT INTO users(name, email) VALUES(%s, %s)",(split[0], split[1]))
+        mysql.connection.commit()
+        cur.close()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
