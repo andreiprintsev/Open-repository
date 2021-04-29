@@ -13,8 +13,9 @@ app = Flask(__name__)
 
 #Conditionally configure database
 print(os.environ.get("RUNNING_ON_HEROKU"))
+print(type(os.environ.get("RUNNING_ON_HEROKU")))
 db = ""
-if os.environ.get("RUNNING_ON_HEROKU") == "True":
+if os.environ.get("RUNNING_ON_HEROKU") != None:
     db = yaml.load(open('cleardb.yaml'))
     print(db)
 else:
@@ -30,10 +31,8 @@ mysql = MySQL(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    print("made it to index!")
     if request.method == 'POST':
         # Fetch form data
-        print("detected post method!")
         userDetails = request.form
         print(userDetails)
         name = userDetails['name']
