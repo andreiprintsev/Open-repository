@@ -15,8 +15,10 @@ app = Flask(__name__)
 print(os.environ.get("RUNNING_ON_HEROKU"))
 if os.environ.get("RUNNING_ON_HEROKU") == True:
     db = yaml.load(open('cleardb.yaml'))
+    print(db)
 else:
     db = yaml.load(open('db.yaml'))
+    print(db)
     
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
