@@ -25,7 +25,7 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
-if os.environ.get("RUNNING_ON_HEROKU") == None:
+if os.environ.get("RUNNING_ON_HEROKU") != None:
     with app.app_context():
         cur = mysql.connection.cursor()
         cur.execute("DELETE FROM users")
