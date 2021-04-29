@@ -64,4 +64,5 @@ def users():
 
 app.run(database_migration())
 
-
+if __name__ == '__main__':
+    app.run()
